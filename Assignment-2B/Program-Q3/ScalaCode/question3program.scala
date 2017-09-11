@@ -1,0 +1,5 @@
+val inputFile=sc.textFile("/user/brk160030/program3input.txt")
+val splitData=inputFile.map(line=>line.split("\t")).map(line=>(line(1),line(2).toInt)).reduceByKey(_+_)
+val output=splitData.sortByKey(true).map(line=>line._1+"\t"+line._2)
+output.collect.foreach(println)
+output.repartition(1).saveAsTextFile("/user/brk160030/output3")
